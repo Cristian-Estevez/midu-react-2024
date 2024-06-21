@@ -1,17 +1,14 @@
 import { useContext } from 'react'
 import { FiltersContext } from '../context/filters'
 
-export default function useFilters () {
+export default function useFilters() {
   const { filters, setFilters } = useContext(FiltersContext)
 
   const filterProducts = (products) => {
-    return products.filter(product => {
+    return products.filter((product) => {
       return (
         product.price >= filters.minPrice &&
-          (
-            filters.category === 'all' ||
-            product.category === filters.category
-          )
+        (filters.category === 'all' || product.category === filters.category)
       )
     })
   }
