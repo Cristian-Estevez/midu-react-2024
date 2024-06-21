@@ -30,29 +30,33 @@ const FollowMouse = () => {
 
   return (
     <>
-      <div style={{
-        position: 'absolute',
-        backgroundColor: '#09f',
-        borderRadius: '50%',
-        opacity: '0.8',
-        pointerEvents: 'none',
-        left: -20,
-        top: -20,
-        width: 40,
-        height: 40,
-        transform: `translate(${position.x}px, ${position.y}px)`,
-        display: `${enabled ? 'block' : 'none'}`
-      }}
+      <div
+        style={{
+          position: 'absolute',
+          backgroundColor: '#09f',
+          borderRadius: '50%',
+          opacity: '0.8',
+          pointerEvents: 'none',
+          left: -20,
+          top: -20,
+          width: 40,
+          height: 40,
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          display: `${enabled ? 'block' : 'none'}`
+        }}
       />
       <button
-        onClick={() => { setEnabled(!enabled) }}
-      >{enabled ? 'Activar' : 'Desactivar'} seguir puntero
+        onClick={() => {
+          setEnabled(!enabled)
+        }}
+      >
+        {enabled ? 'Activar' : 'Desactivar'} seguir puntero
       </button>
     </>
   )
 }
 
-export default function App () {
+export default function App() {
   return (
     <main>
       <FollowMouse />

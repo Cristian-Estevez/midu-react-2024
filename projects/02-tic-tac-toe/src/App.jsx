@@ -7,12 +7,10 @@ import { checkWinnerFrom, checkEndGame } from './logic/board.js'
 import { WinnerModal } from './components/WinnerModal.jsx'
 import { resetGameStorage, saveGameToStorage } from './logic/storage/index.js'
 
-export default function App () {
+export default function App() {
   const [board, setBoard] = useState(() => {
     const boardFromStorage = window.localStorage.getItem('board')
-    return boardFromStorage
-      ? JSON.parse(boardFromStorage)
-      : Array(9).fill(null)
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
   })
 
   const [turn, setTurn] = useState(() => {
@@ -51,30 +49,23 @@ export default function App () {
   }
 
   return (
-    <main className='board'>
+    <main className="board">
       <h1>Ta Te Ti</h1>
       <button onClick={resetGame}>Reset del juego</button>
-      <section className='game'>
+      <section className="game">
         {board.map((square, index) => (
-          <Square
-            key={index}
-            index={index}
-            updateBoard={updateBoard}
-          >
+          <Square key={index} index={index} updateBoard={updateBoard}>
             {square}
           </Square>
         ))}
       </section>
 
-      <section className='turn'>
+      <section className="turn">
         <Square isSelected={turn === TURNS.x}>{TURNS.x}</Square>
         <Square isSelected={turn === TURNS.o}>{TURNS.o}</Square>
       </section>
 
-      <WinnerModal
-        winner={winner}
-        resetGame={resetGame}
-      />
+      <WinnerModal winner={winner} resetGame={resetGame} />
     </main>
   )
 }
