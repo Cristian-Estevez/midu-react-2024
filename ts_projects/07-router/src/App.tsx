@@ -13,6 +13,10 @@ const appRoutes = [
     path: "/",
     component: Home,
   },
+  {
+    path: "/search/:query",
+    component: ({ routeParams }) => <h1>Has buscado "{routeParams.query}"</h1>,
+  },
 ];
 
 export default function App() {

@@ -14,5 +14,8 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json"
+  },
+  "dependencies": {
+    "path-to-regexp": "7.0.0"
   }
 }
