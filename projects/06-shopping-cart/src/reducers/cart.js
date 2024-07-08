@@ -1,4 +1,5 @@
-export const cartInitialState = JSON.parse(window.localStorage.getItem('cart')) || []
+export const cartInitialState =
+  JSON.parse(window.localStorage.getItem('cart')) || []
 
 export const CART_ACTION_TYPES = {
   ADD_TO_CART: 'ADD_TO_CART',
@@ -6,14 +7,14 @@ export const CART_ACTION_TYPES = {
   CLEAR_CART: 'CLEAR_CART'
 }
 
-export const updateLocalStorage = state => {
+export const updateLocalStorage = (state) => {
   window.localStorage.setItem('cart', JSON.stringify(state))
 }
 
 const UPDATE_STATE_BY_ACTION = {
   [CART_ACTION_TYPES.ADD_TO_CART]: (state, action) => {
     const { id } = action.payload
-    const productInCartIndex = state.findIndex(item => item.id === id)
+    const productInCartIndex = state.findIndex((item) => item.id === id)
 
     if (productInCartIndex >= 0) {
       const newState = structuredClone(state)
@@ -35,7 +36,7 @@ const UPDATE_STATE_BY_ACTION = {
   },
   [CART_ACTION_TYPES.REMOVE_FROM_CART]: (state, action) => {
     const { id } = action.payload
-    const newState = state.filter(item => item.id !== id)
+    const newState = state.filter((item) => item.id !== id)
 
     updateLocalStorage(newState)
     return newState

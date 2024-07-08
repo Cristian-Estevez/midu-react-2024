@@ -2,36 +2,35 @@ import './Filters.css'
 import { useId } from 'react'
 import useFilters from '../hooks/usefilters'
 
-export default function Filters () {
+export default function Filters() {
   const { setFilters, filters } = useFilters()
 
   const minPriceFilterId = useId()
   const categoryFilterId = useId()
 
   const handleChangeMinPrice = (event) => {
-    setFilters(prevState => ({
+    setFilters((prevState) => ({
       ...prevState,
       minPrice: event.target.value
     }))
   }
 
   const handleChangeCategory = (event) => {
-    setFilters(prevState => ({
+    setFilters((prevState) => ({
       ...prevState,
       category: event.target.value
     }))
   }
 
   return (
-    <section className='filters'>
-
+    <section className="filters">
       <div>
         <label htmlFor={minPriceFilterId}>Price from</label>
         <input
-          type='range'
+          type="range"
           id={minPriceFilterId}
-          min='0'
-          max='1000'
+          min="0"
+          max="1000"
           onChange={handleChangeMinPrice}
           value={filters.minPrice}
         />
@@ -40,16 +39,12 @@ export default function Filters () {
 
       <div>
         <label htmlFor={categoryFilterId}>Category</label>
-        <select
-          id={categoryFilterId}
-          onChange={handleChangeCategory}
-        >
-          <option value='all'>All</option>
+        <select id={categoryFilterId} onChange={handleChangeCategory}>
+          <option value="all">All</option>
           <option value="women's clothing">Women's clothing</option>
-          <option value='electronics'>Electronics</option>
+          <option value="electronics">Electronics</option>
         </select>
       </div>
-
     </section>
   )
 }

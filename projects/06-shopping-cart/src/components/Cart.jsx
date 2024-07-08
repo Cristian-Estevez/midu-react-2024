@@ -4,41 +4,29 @@ import CartItem from './CartItem.jsx'
 import { ClearCartIcon, CartIcon } from './Icons.jsx'
 import { useId } from 'react'
 
-export default function Cart () {
+export default function Cart() {
   const cartCheckboxId = useId()
   const { cart, clearCart, addToCart } = useCart()
 
   return (
     <>
-      <label
-        htmlFor={cartCheckboxId}
-        className='cart-button'
-      >
+      <label htmlFor={cartCheckboxId} className="cart-button">
         <CartIcon />
-
       </label>
-      <input
-        id={cartCheckboxId}
-        type='checkbox'
-        hidden
-      />
+      <input id={cartCheckboxId} type="checkbox" hidden />
 
-      <aside className='cart'>
+      <aside className="cart">
         <ul>
-          {
-            cart.map(product => (
-              <CartItem
-                key={product.id}
-                {...product}
-                addToCart={() => addToCart(product)}
-              />
-            ))
-          }
+          {cart.map((product) => (
+            <CartItem
+              key={product.id}
+              {...product}
+              addToCart={() => addToCart(product)}
+            />
+          ))}
         </ul>
 
-        <button
-          onClick={clearCart}
-        >
+        <button onClick={clearCart}>
           <ClearCartIcon />
         </button>
       </aside>

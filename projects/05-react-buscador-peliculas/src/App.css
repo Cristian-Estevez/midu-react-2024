@@ -32,10 +32,10 @@ form {
 
 .movie {
   text-align: center;
-
 }
 
-.movie h3, movie p {
+.movie h3,
+movie p {
   padding: 0;
 }
 

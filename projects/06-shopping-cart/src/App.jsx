@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 import Cart from './components/Cart'
 import CartProvider from './context/cart'
 
-function App () {
+function App() {
   const { filterProducts } = useFilters()
 
   const filteredProducts = filterProducts(initialProducts)

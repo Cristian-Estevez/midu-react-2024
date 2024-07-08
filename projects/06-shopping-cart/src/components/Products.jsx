@@ -2,20 +2,17 @@ import './Products.css'
 import { AddToCartIcon, RemoveFromCartIcon } from './Icons.jsx'
 import { useCart } from '../hooks/useCart.js'
 
-export default function Products ({ products }) {
+export default function Products({ products }) {
   const { addToCart, checkProductInCart, removeFromCart } = useCart()
 
   return (
-    <main className='products'>
+    <main className="products">
       <ul>
-        {products.map(product => {
+        {products.map((product) => {
           const isProductInCart = checkProductInCart(product)
           return (
             <li key={product.id}>
-              <img
-                src={product.thumbnail}
-                alt={product.title}
-              />
+              <img src={product.thumbnail} alt={product.title} />
               <div>
                 <strong>{product.title}</strong> - {product.price}
               </div>
@@ -28,17 +25,12 @@ export default function Products ({ products }) {
                       : addToCart(product)
                   }}
                 >
-                  {
-                    isProductInCart
-                      ? <RemoveFromCartIcon />
-                      : <AddToCartIcon />
-                  }
+                  {isProductInCart ? <RemoveFromCartIcon /> : <AddToCartIcon />}
                 </button>
               </div>
             </li>
           )
         })}
-
       </ul>
     </main>
   )
