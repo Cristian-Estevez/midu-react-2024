@@ -11,10 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "standard": "^17.1.0"
-  },
-  "eslintConfig": {
-    "extends": "./node_modules/standard/eslintrc.json"
+    "prettier": "^3.3.2"
   },
   "dependencies": {
     "path-to-regexp": "7.0.0"
