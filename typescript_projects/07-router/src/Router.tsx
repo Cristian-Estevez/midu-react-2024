@@ -1,6 +1,7 @@
 import { Children, PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import { EVENTS } from "./constants";
 import { match } from "path-to-regexp";
+import { getCurrentPath } from "./utils";
 
 export interface RouteParams extends Record<string,any>{}
 
@@ -16,11 +17,11 @@ export default function Router({
 }:
   RouterParams
 ) {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [currentPath, setCurrentPath] = useState(getCurrentPath());
 
   useEffect(() => {
     const onLocationChange = () => {
-      setCurrentPath(window.location.pathname);
+      setCurrentPath(getCurrentPath());
     };
 
     window.addEventListener(EVENTS.PUSHSTATE, onLocationChange);
@@ -38,8 +39,7 @@ export default function Router({
     return type.name === 'Route' ? props : null
   })
 
-  const routesToUse = routesFromchildren.concat(routes)
-  console.log(routesToUse)
+  const routesToUse = routes.concat(routesFromchildren).filter(Boolean)
 
   const Page = routesToUse.find(({ path }:{path:string}) => {
     if (path === currentPath) return true;
