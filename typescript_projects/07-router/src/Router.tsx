@@ -1,14 +1,21 @@
-import { ReactNode, useEffect, useState } from "react";
+import { Children, PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import { EVENTS } from "./constants";
 import { match } from "path-to-regexp";
+
+export interface RouteParams extends Record<string,any>{}
+
+export interface RouterParams extends PropsWithChildren{
+  routes: Array<any>;
+  defaultComponent?: () => ReactNode;
+}
 
 export default function Router({
   routes = [],
   defaultComponent: DefaultComponent = () => <h1>404</h1>,
-}: {
-  routes: Array<any>;
-  defaultComponent?: () => ReactNode;
-}) {
+  children
+}:
+  RouterParams
+) {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
@@ -25,9 +32,16 @@ export default function Router({
     };
   }, []);
 
-  let routeParams = {};
+  let routeParams: RouteParams= {};
 
-  const Page = routes.find(({ path }) => {
+  const routesFromchildren = Children.map(children, ({props, type} : any) => {
+    return type.name === 'Route' ? props : null
+  })
+
+  const routesToUse = routesFromchildren.concat(routes)
+  console.log(routesToUse)
+
+  const Page = routesToUse.find(({ path }:{path:string}) => {
     if (path === currentPath) return true;
 
     const matchedUrl = match(path, { decode: decodeURIComponent });
@@ -35,7 +49,7 @@ export default function Router({
     if (!matched) return false;
     routeParams = matched.params;
     return true;
-  })?.component;
+  })?.Component;
 
   return Page ? <Page routeParams={routeParams} /> : <DefaultComponent />;
 }
