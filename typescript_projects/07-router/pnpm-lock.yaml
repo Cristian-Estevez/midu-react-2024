@@ -11,6 +11,9 @@ importers:
       path-to-regexp:
         specifier: ^7.0.0
         version: 7.0.0
+      pnpm:
+        specifier: ^9.5.0
+        version: 9.5.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1052,6 +1055,11 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  pnpm@9.5.0:
+    resolution: {integrity: sha512-FAA2gwEkYY1iSiGHtQ0EKJ1aCH8ybJ7fwMzXM9dsT1LDoxPU/BSHlKKp2BVTAWAE5nQujPhQZwJopzh/wiDJAw==}
+    engines: {node: '>=18.12'}
+    hasBin: true
 
   postcss@8.4.39:
     resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
@@ -2225,6 +2233,8 @@ snapshots:
   picocolors@1.0.1: {}
 
   picomatch@2.3.1: {}
+
+  pnpm@9.5.0: {}
 
   postcss@8.4.39:
     dependencies:

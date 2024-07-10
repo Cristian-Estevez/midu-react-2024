@@ -1,5 +1,5 @@
-import {it, describe, expect, beforeEach, vi} from 'vitest'
-import {cleanup, render, screen} from '@testing-library/react'
+import { it, describe, expect, beforeEach, vi } from 'vitest'
+import { cleanup, render, screen } from '@testing-library/react'
 import Router from '../Router'
 import Route from '../Route'
 import Link from '../Link'
@@ -9,7 +9,7 @@ vi.mock('../utils', () => ({
   getCurrentPath: vi.fn()
 }))
 
-describe('Router',() => {
+describe('Router', () => {
   beforeEach(() => {
     cleanup()
     vi.clearAllMocks()
@@ -21,7 +21,7 @@ describe('Router',() => {
   })
 
   it('Should render 404 if pat doesnt match', () => {
-    render(<Router routes={[]} defaultComponent={()=><div>404</div>}/>)
+    render(<Router routes={[]} defaultComponent={() => <div>404</div>} />)
     expect(screen.getByText('404')).toBeTruthy()
   })
 
@@ -35,33 +35,36 @@ describe('Router',() => {
       {
         path: '/about',
         Component: () => <h1>NotAbout</h1>
-      },
+      }
     ]
 
-    render(<Router routes={routes}/>)
+    render(<Router routes={routes} />)
     expect(screen.getByText('About')).toBeTruthy()
   })
 
-  it('Should navigate using Links', () => {
-    getCurrentPath.mockReturnValue('/')
+  it('Should navigate using Links', async () => {
+    getCurrentPath.mockReturnValueOnce('/')
 
     render(
       <Router>
-        <Route path='/' Component={() => {
-          return(
-            <>
-            <div>Home</div>
-            <Link to="/about">About</Link>
-            </>
-          )
-        }}/>
+        <Route
+          path="/"
+          Component={() => {
+            return (
+              <>
+                <div>Home</div>
+                <Link to="/about">About</Link>
+              </>
+            )
+          }}
+        />
 
-        <Route path='/about' Component={() => <div>Redirected</div>}/>
+        <Route path="/about" Component={() => <div>Redirected</div>} />
       </Router>
     )
 
     screen.getByText('About').click()
-    todo fixthis
-    expect(screen.getByText('Redirected')).toBeTruthy()
+    const redirectedTitle = await screen.findByText('Redirected')
+    expect(screen.findByText(redirectedTitle)).toBeTruthy()
   })
 })
