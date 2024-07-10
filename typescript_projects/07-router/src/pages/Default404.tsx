@@ -1,4 +1,4 @@
-import Link from "../Link";
+import { Link } from '../Link'
 
 export default function Default404() {
   return (
@@ -12,5 +12,5 @@ export default function Default404() {
       </div>
       <Link to="/">Volver a home</Link>
     </>
-  );
+  )
 }

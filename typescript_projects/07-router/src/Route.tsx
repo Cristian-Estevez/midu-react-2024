@@ -1,7 +1,11 @@
-import { LazyExoticComponent } from "react";
+import { LazyExoticComponent } from 'react'
 
-export interface RouteProps {path:string, Component: LazyExoticComponent<() => JSX.Element>}
+export interface RouteProps {
+  path: string
+  Component: LazyExoticComponent<() => JSX.Element>
+}
 
-export default function Route(props: RouteProps) {
-    return null
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function Route(_props: RouteProps) {
+  return null
 }

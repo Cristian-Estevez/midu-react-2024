@@ -1,4 +1,4 @@
-import Link from "../Link";
+import { Link } from '../Link'
 
 export default function Home() {
   return (
@@ -7,5 +7,5 @@ export default function Home() {
       <p>Página de desarrollo para un React-Router demo</p>
       <Link to="/about">Acerca del desarrollador.</Link>
     </>
-  );
+  )
 }

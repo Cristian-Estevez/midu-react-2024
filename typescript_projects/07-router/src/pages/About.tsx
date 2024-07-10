@@ -1,4 +1,4 @@
-import Link from "../Link";
+import { Link } from '../Link'
 
 export default function About() {
   return (
@@ -13,5 +13,5 @@ export default function About() {
       <p>Hola Mi nombre es Cristian y estoy creando un clon de react-router</p>
       <Link to="/">Volver a home.</Link>
     </>
-  );
+  )
 }
