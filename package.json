@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "prettier": "^3.3.2"
+  },
+  "dependencies": {
+    "path-to-regexp": "7.0.0"
   }
 }
