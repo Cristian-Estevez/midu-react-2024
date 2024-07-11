@@ -9,9 +9,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "prepare": "swc ./src/*.tsx -d lib && rm lib/src/App.js lib/src/main.js && mv lib/src/* lib/ && rmdir lib/src"
+    "prepare": "pnpm test && swc ./src/*.tsx -d lib && rm lib/src/App.js lib/src/main.js && mv lib/src/* lib/ && rmdir lib/src"
   },
   "dependencies": {
     "path-to-regexp": "^7.0.0",
