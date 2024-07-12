@@ -1,71 +1,43 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
-import { useReducer } from 'react'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { type State } from "./types";
+import { useTranslate } from "./hooks/useTranslate";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { AUTO_LANGUAGE } from "./constants";
+import { ArrowsIcon } from "./components/icons";
 
-const initialState = {
-  fromLanguage: 'auto',
-  toLanguage: 'en',
-  fromText: '',
-  result: '',
-  loading: false
-}
-
-const ACTION = {
-  INTERCHANGE_LAGUAGES: 'INTERCHANGE_LAGUAGES',
-  SET_FROM_LANGUAGE: 'SET_FROM_LANGUAGE',
-  SET_TO_LANGUAGE: 'SET_TO_LANGUAGE',
-  SET_FROM_TEXT: 'SET_FROM_TEXT',
-  SET_RESULT: 'SET_RESULT'
-}
-
-const reducer = (state, action) => {
-  const { type, payload } = action
-
-  if (type === ACTION.INTERCHANGE_LAGUAGES) {
-    return {
-      ...state,
-      fromLanguage: state.toLanguage,
-      toLanguage: state.fromLanguage
-    }
-  }
-
-  if (type === ACTION.SET_FROM_LANGUAGE) {
-    return {
-      ...state,
-      fromLanguage: payload
-    }
-  }
-
-  if (type === ACTION.SET_TO_LANGUAGE) {
-    return {
-      ...state,
-      toLanguage: payload
-    }
-  }
-
-  if (type === ACTION.SET_FROM_TEXT) {
-    return {
-      ...state,
-      result: payload
-    }
-  }
-
-  if (type === ACTION.SET_RESULT) {
-    return {
-      ...state,
-      result: payload
-    }
-  }
-
-  return state
-}
+const initialState: State = {
+  fromLanguage: "auto",
+  toLanguage: "en",
+  fromText: "",
+  result: "",
+  loading: false,
+};
 
 export default function App() {
-  const [state, dispatch] = useReducer(reducer, initialState)
-
+  const { fromLanguage, toLanguage, interchageLanguages } =
+    useTranslate(initialState);
   return (
-    <div>
+    <Container fluid>
       <h1>Google Translate Clone</h1>
-    </div>
-  )
+      <Row>
+        <Col>
+          <h2>From</h2>
+          {fromLanguage}
+        </Col>
+        <Col>
+          <Button
+            disabled={fromLanguage === AUTO_LANGUAGE}
+            onClick={interchageLanguages}
+          >
+            <ArrowsIcon />
+          </Button>
+        </Col>
+        <Col>
+          <h2>To</h2>
+          {toLanguage}
+        </Col>
+      </Row>
+    </Container>
+  );
 }
