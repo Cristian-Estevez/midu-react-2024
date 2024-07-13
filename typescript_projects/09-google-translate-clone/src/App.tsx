@@ -2,10 +2,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { SectionType, type State } from "./types.d";
 import { useTranslate } from "./hooks/useTranslate";
-import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  FormText,
+  Row,
+  Stack,
+} from "react-bootstrap";
 import { AUTO_LANGUAGE } from "./constants";
 import { ArrowsIcon } from "./components/icons";
 import { LanguageSelector } from "./components/LanguageSelector";
+import { TextArea } from "./components/TextArea";
 
 const initialState: State = {
   fromLanguage: "auto",
@@ -17,11 +26,16 @@ const initialState: State = {
 
 export default function App() {
   const {
+    fromText,
+    result,
     fromLanguage,
+    toLanguage,
+    loading,
     setFromLanguage,
     interchageLanguages,
     setToLanguage,
-    toLanguage,
+    setFromText,
+    setResult,
   } = useTranslate(initialState);
 
   return (
@@ -35,11 +49,10 @@ export default function App() {
               type={SectionType.From}
               onChange={setFromLanguage}
             />
-            <Form.Control
-              as="textarea"
-              placeholder="Introducir texto"
-              autoFocus
-              style={{ height: "150px" }}
+            <TextArea
+              type={SectionType.From}
+              value={fromText}
+              onChange={setFromText}
             />
           </Stack>
         </Col>
@@ -59,11 +72,11 @@ export default function App() {
               type={SectionType.To}
               onChange={setToLanguage}
             />
-            <Form.Control
-              as="textarea"
-              placeholder="Traducción"
-              style={{ height: "150px" }}
-              disabled
+            <TextArea
+              loading={loading}
+              type={SectionType.To}
+              value={result}
+              onChange={setResult}
             />
           </Stack>
         </Col>

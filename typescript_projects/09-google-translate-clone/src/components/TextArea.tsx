@@ -1,23 +1,46 @@
 import { Form } from "react-bootstrap";
-import { FromLanguage, Language, SectionType } from "../types";
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
+import { SectionType } from "../types.d";
 
-interface CommonProps {
+type Props = {
+  type: SectionType;
   onChange: (value: string) => void;
   value: string;
-}
+  loading?: boolean;
+};
 
-type Props =
-  | (CommonProps & { type: SectionType.From; loading?: undefined })
-  | { type: SectionType.To; loading?: undefined };
+const commonStyles = { border: 0, height: "200px", Resize: "none" };
+
+const getPlaceHolder = ({
+  type,
+  loading,
+}: {
+  type: SectionType;
+  loading?: boolean;
+}) => {
+  if (type === SectionType.From) return "Introducir texto";
+  if (loading) return "Cargando...";
+  return "Traducción";
+};
 
 export const TextArea: FC<Props> = ({ loading, type, value, onChange }) => {
+  const styles =
+    type === SectionType.From
+      ? commonStyles
+      : { ...commonStyles, backgroundColor: "#f5f5f5" };
+
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    onChange(event.target.value);
+  };
+
   return (
     <Form.Control
       as="textarea"
-      placeholder="Traducción"
-      style={{ height: "150px" }}
-      disabled
+      placeholder={getPlaceHolder({ type, loading })}
+      autoFocus={type === SectionType.From}
+      style={styles}
+      value={value}
+      onChange={handleChange}
     />
   );
 };
