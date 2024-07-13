@@ -9,6 +9,7 @@ import { TextArea } from "./components/TextArea";
 import { useEffect } from "react";
 import { translate } from "./services/translate";
 import { useTranslate } from "./hooks/useTranslate";
+import { usedebounce } from "./hooks/useDebounce";
 
 const initialState: State = {
   fromLanguage: "auto",
@@ -18,7 +19,7 @@ const initialState: State = {
   loading: false,
 };
 
-export default async function App() {
+export default function App() {
   const {
     fromText,
     result,
@@ -32,9 +33,10 @@ export default async function App() {
     setResult,
   } = useTranslate(initialState);
 
-  console.log({ ...useTranslate(initialState) });
+  const debouncedFromtext = usedebounce(fromText, 300);
+
   useEffect(() => {
-    if (fromText.trim() === "") return;
+    if (debouncedFromtext.trim() === "") return;
 
     translate({ fromLanguage, toLanguage, text: fromText })
       .then((result) => {
@@ -45,7 +47,7 @@ export default async function App() {
         console.error(error);
         setResult("Error");
       });
-  }, [fromText]);
+  }, [debouncedFromtext, fromLanguage, toLanguage]);
 
   return (
     <Container fluid>

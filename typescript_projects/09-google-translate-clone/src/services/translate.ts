@@ -1,11 +1,10 @@
 import { FromLanguage, Language } from "../types";
-import OpenAI from "openai";
 import { SUPPORTED_LANGUAGES } from "../constants";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { CohereClient } from "cohere-ai";
+import { Message } from "cohere-ai/api";
 
-const openAi = new OpenAI({
-  apiKey: import.meta.env.VITE_GPT_API_KEY,
-  dangerouslyAllowBrowser: true,
+const cohere = new CohereClient({
+  token: import.meta.env.VITE_AI_API_KEY,
 });
 
 export async function translate({
@@ -19,27 +18,27 @@ export async function translate({
 }) {
   if (fromLanguage === toLanguage) return text;
 
-  const messages: ChatCompletionMessageParam[] = [
+  const messages: Message[] = [
     {
-      role: "system",
-      content:
-        'You are an AI that translates text from different laguages. You will receive a text. Do not interpret the text only limit yourself to translating it. Yo will receive the original language surounded by `{{` and `}}` in case you receive the original language with the content "auto", you have to detect the language from the text entered. You will also receive a second language to which the text will be traslated to, surrounded by `[[` and `]]`. ',
+      role: "SYSTEM",
+      message:
+        'You are an AI that translates text from different laguages. You will receive a text. Do not interpret the text only limit yourself to translating it. Yo will receive the original language surounded by `{{` and `}}` in case you receive the original language with the message "auto", you have to detect the language from the text entered. You will also receive a second language to which the text will be traslated to, surrounded by `[[` and `]]`. Be extremely precise. Do not return text if the input is incomplete.',
     },
     {
-      role: "system",
-      content: "Hola mundo {{Español}} [[English]]",
+      role: "USER",
+      message: "Hola mundo {{Español}} [[English]]",
     },
     {
-      role: "assistant",
-      content: "Hello world",
+      role: "CHATBOT",
+      message: "Hello world",
     },
     {
-      role: "user",
-      content: "How are you? {{auto}} [[español]]",
+      role: "USER",
+      message: "How are you? {{auto}} [[español]]",
     },
     {
-      role: "assistant",
-      content: "¿Como estás?",
+      role: "CHATBOT",
+      message: "¿Como estás?",
     },
   ];
 
@@ -47,16 +46,10 @@ export async function translate({
     fromLanguage === "auto" ? "auto" : SUPPORTED_LANGUAGES[fromLanguage];
   const toCode = SUPPORTED_LANGUAGES[toLanguage];
 
-  const completion = await openAi.chat.completions.create({
-    messages: [
-      ...messages,
-      {
-        role: "user",
-        content: `${text}, {{${fromCode}}} [[${toCode}]]`,
-      },
-    ],
-    model: "gpt-3.5-turbo",
+  const response = await cohere.chat({
+    chatHistory: messages,
+    message: `${text}, {{${fromCode}}} [[${toCode}]]`,
   });
 
-  return completion.choices[0]?.message?.content;
+  return response.text;
 }

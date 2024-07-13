@@ -3,39 +3,52 @@ import { AUTO_LANGUAGE } from "../constants";
 import { Action, FromLanguage, Language, State } from "../types.d";
 
 const reducer = (state: State, action: Action) => {
-  console.log("reducer");
   const { type } = action;
 
   if (type === "INTERCHANGE_LAGUAGES") {
     if (state.fromLanguage === AUTO_LANGUAGE) return state;
-
+    const loading = state.fromText !== "";
     return {
       ...state,
       fromLanguage: state.toLanguage,
       toLanguage: state.fromLanguage,
+      loading: loading,
+      result: "",
     };
   }
 
   if (type === "SET_FROM_LANGUAGE") {
+    if (state.fromLanguage === action.payload) return state;
+    const loading = state.fromText !== "";
+
     return {
       ...state,
       fromLanguage: action.payload,
+      result: "",
+      loading: loading,
     };
   }
 
   if (type === "SET_TO_LANGUAGE") {
+    if (state.toLanguage === action.payload) return state;
+    const loading = state.fromText !== "";
+
     return {
       ...state,
       toLanguage: action.payload,
+      result: "",
+      loading: loading,
     };
   }
 
   if (type === "SET_FROM_TEXT") {
+    const loading = action.payload !== "";
+
     return {
       ...state,
-      loading: true,
       fromText: action.payload,
       result: "",
+      loading: loading,
     };
   }
 
