@@ -1,20 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import { Button, Col, Container, Row, Stack } from "react-bootstrap";
 import { SectionType, type State } from "./types.d";
-import { useTranslate } from "./hooks/useTranslate";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  FormText,
-  Row,
-  Stack,
-} from "react-bootstrap";
 import { AUTO_LANGUAGE } from "./constants";
 import { ArrowsIcon } from "./components/icons";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { TextArea } from "./components/TextArea";
+import { useEffect } from "react";
+import { translate } from "./services/translate";
+import { useTranslate } from "./hooks/useTranslate";
 
 const initialState: State = {
   fromLanguage: "auto",
@@ -24,7 +18,7 @@ const initialState: State = {
   loading: false,
 };
 
-export default function App() {
+export default async function App() {
   const {
     fromText,
     result,
@@ -37,6 +31,21 @@ export default function App() {
     setFromText,
     setResult,
   } = useTranslate(initialState);
+
+  console.log({ ...useTranslate(initialState) });
+  useEffect(() => {
+    if (fromText.trim() === "") return;
+
+    translate({ fromLanguage, toLanguage, text: fromText })
+      .then((result) => {
+        if (result == null) return;
+        setResult(result);
+      })
+      .catch((error) => {
+        console.error(error);
+        setResult("Error");
+      });
+  }, [fromText]);
 
   return (
     <Container fluid>
